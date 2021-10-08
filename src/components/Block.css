@@ -1,0 +1,27 @@
+.block {
+  margin: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  font-weight: 900;
+  height: 100px;
+  width: 100px;
+}
+
+.block_hoverEffect {
+  color: white;
+  transition: all 0.2s ease;
+}
+.block_hoverEffect:hover {
+  color: gray;
+}
+
+.block__shadow {
+  box-shadow: 0 0 10px black;
+}
+.block:active {
+  box-shadow: 0 0 2px black;
+}

@@ -3,10 +3,70 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: rgb(27, 31, 36);
+  width: 100vw;
+  height: 100vh;
 }
 
-.kk {
-  width: 100px;
-  height: 100px;
-  background-color: red;
+.App__header {
+  width: 400px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.App__header__result {
+  font-size: 30px;
+  font-weight: 600;
+  /* padding: 10px; */
+  flex: 1;
+}
+.App__header__title {
+  font-size: 30px;
+  font-weight: 600;
+}
+.App__header__button {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.container {
+  box-shadow: 0 0 20px rgb(27, 31, 36) inset;
+  background-color: white;
+  padding: 60px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+}
+
+.btn {
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 2px 5px 5px 5px;
+}
+.btn:hover {
+  border: 1px solid white;
+}
+.btn:active {
+  transform: scale(0.98);
+  border: 1px solid white;
+}
+.eyeBall {
+  background: radial-gradient(closest-side, #034663, #5eb4c4, #407aaa);
+  height: 390px;
+  width: 390px;
+  border-radius: 50%;
+  position: absolute;
+  transition: opacity 1s ease;
+}
+.eyeBallBlack {
+  background-color: rgba(0, 0, 0, 0.795);
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+  position: absolute;
+  transition: opacity 1s ease;
 }
