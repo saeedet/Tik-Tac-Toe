@@ -101,3 +101,18 @@ export const computerMove = (arr) => {
   newArray[index] = "O";
   return newArray;
 };
+
+export const drawCheck = (gameArray, winner) => {
+  let nullCount = 0;
+  gameArray.forEach((i) => {
+    if (i === null) {
+      nullCount++;
+    }
+  });
+
+  if (!nullCount && !winner) {
+    return true;
+  } else {
+    return false;
+  }
+};

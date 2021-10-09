@@ -2,7 +2,7 @@ import { useState } from "react";
 import Block from "./components/Block";
 import "./App.css";
 import "animate.css";
-import { computerMove, winCheck } from "./utils/utils";
+import { computerMove, winCheck, drawCheck } from "./utils/utils";
 import { useEffect } from "react/cjs/react.development";
 
 function App() {
@@ -13,17 +13,17 @@ function App() {
   const [winner, setWinner] = useState(false);
   const [draw, setDraw] = useState(false);
 
-  // useEffect(() => {
-  //   let nullCount = 0;
-  //   gameArray.forEach((i) => {
-  //     if (i === null) {
-  //       nullCount++;
-  //     }
-  //   });
-  //   if (!nullCount && !winner) {
-  //     setDraw(true);
-  //   }
-  // }, [gameArray, winner]);
+  useEffect(() => {
+    let nullCount = 0;
+    gameArray.forEach((i) => {
+      if (i === null) {
+        nullCount++;
+      }
+    });
+    if (!nullCount && !winner) {
+      setDraw(true);
+    }
+  }, [gameArray, winner]);
 
   const clickHandler = (e) => {
     const clickedIndex = e.target.id;
@@ -31,6 +31,7 @@ function App() {
     newGameArray[clickedIndex] = "X";
     setGameArray(newGameArray);
     const winCombinations = winCheck(newGameArray);
+    setDraw(drawCheck(newGameArray, winner));
 
     if (winCombinations.length) {
       setWinner(true);
