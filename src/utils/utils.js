@@ -58,7 +58,6 @@ export const computerMove = (arr) => {
               index = i;
             }
           });
-        } else {
         }
       });
       if (oCount === 0) {

@@ -13,17 +13,17 @@ function App() {
   const [winner, setWinner] = useState(false);
   const [draw, setDraw] = useState(false);
 
-  useEffect(() => {
-    let nullCount = 0;
-    gameArray.forEach((i) => {
-      if (i === null) {
-        nullCount++;
-      }
-    });
-    if (!nullCount && !winner) {
-      setDraw(true);
-    }
-  }, [gameArray, winner]);
+  // useEffect(() => {
+  //   let nullCount = 0;
+  //   gameArray.forEach((i) => {
+  //     if (i === null) {
+  //       nullCount++;
+  //     }
+  //   });
+  //   if (!nullCount && !winner) {
+  //     setDraw(true);
+  //   }
+  // }, [gameArray, winner]);
 
   const clickHandler = (e) => {
     const clickedIndex = e.target.id;
