@@ -11,6 +11,7 @@ function App() {
   const [won, setWon] = useState(false);
   const [winner, setWinner] = useState(false);
   const [draw, setDraw] = useState(false);
+  const [gameLevel, setGameLevel] = useState(true);
 
   const clickHandler = (e) => {
     const clickedIndex = e.target.id;
@@ -26,7 +27,7 @@ function App() {
       setWon(true);
     } else {
       setTimeout(() => {
-        const computerGameArray = computerMove(newGameArray);
+        const computerGameArray = computerMove(newGameArray, gameLevel);
         setGameArray(computerGameArray);
         if (winCheck(computerGameArray).length) {
           setWinner(true);

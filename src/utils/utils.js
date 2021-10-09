@@ -22,7 +22,7 @@ export const winCheck = (arr) => {
   return currentWinCombos;
 };
 
-export const computerMove = (arr) => {
+export const computerMove = (arr, gameLevel) => {
   let index;
 
   const winPotentials = winCombinations.filter((combination) => {
@@ -89,12 +89,19 @@ export const computerMove = (arr) => {
         }
       }
 
-      if (xCorners > 1) {
+      if (xCorners > 1 && gameLevel) {
         //take the middle which is empty yet
         for (let i = 0; i < middleConers.length; i++) {
           if (arr[middleConers[i]] === null) {
             index = middleConers[i];
             xCorners = 0;
+            break;
+          }
+        }
+      } else if (xCorners === 1 && gameLevel) {
+        for (let i = 0; i < corners.length; i++) {
+          if (arr[corners[i]] === null) {
+            index = corners[i];
             break;
           }
         }
