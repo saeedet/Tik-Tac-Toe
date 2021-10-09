@@ -31,7 +31,7 @@ function App() {
     newGameArray[clickedIndex] = "X";
     setGameArray(newGameArray);
     const winCombinations = winCheck(newGameArray);
-    setDraw(drawCheck(newGameArray, winner));
+    // setDraw(drawCheck(newGameArray, winner));
 
     if (winCombinations.length) {
       setWinner(true);
