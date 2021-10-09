@@ -8,6 +8,8 @@ const winCombinations = [
   [1, 4, 7],
   [2, 4, 6],
 ];
+const corners = [0, 2, 6, 8];
+const middleConers = [1, 3, 5, 7];
 
 export const winCheck = (arr) => {
   const currentWinCombos = winCombinations.filter(
@@ -43,6 +45,7 @@ export const computerMove = (arr) => {
       return false;
     }
   });
+
   if (winPotentials.length) {
     if (winPotentials.length > 1) {
       let oCount = 0;
@@ -60,7 +63,6 @@ export const computerMove = (arr) => {
             }
           });
         }
-        console.log(index);
       });
       if (oCount === 0) {
         winPotentials[0].forEach((i) => {
@@ -80,19 +82,37 @@ export const computerMove = (arr) => {
     if (arr[4] === null) {
       index = 4;
     } else {
-      const nextMove = winCombinations.filter(
-        (combination) =>
-          arr[combination[0]] === arr[combination[2]] &&
-          arr[combination[2]] === arr[combination[1]] &&
-          arr[combination[0]] === null
-      );
-      if (nextMove.length) {
-        index = nextMove[0][0];
-      } else {
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i] === null) {
-            index = i;
+      let xCorners = 0;
+      for (let i = 0; i < corners.length; i++) {
+        if (arr[corners[i]] === "X") {
+          xCorners++;
+        }
+      }
+
+      if (xCorners > 1) {
+        //take the middle which is empty yet
+        for (let i = 0; i < middleConers.length; i++) {
+          if (arr[middleConers[i]] === null) {
+            index = middleConers[i];
+            xCorners = 0;
             break;
+          }
+        }
+      } else {
+        const nextMove = winCombinations.filter(
+          (combination) =>
+            arr[combination[0]] === arr[combination[2]] &&
+            arr[combination[2]] === arr[combination[1]] &&
+            arr[combination[0]] === null
+        );
+        if (nextMove.length) {
+          index = nextMove[0][0];
+        } else {
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === null) {
+              index = i;
+              break;
+            }
           }
         }
       }

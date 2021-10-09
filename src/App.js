@@ -3,7 +3,6 @@ import Block from "./components/Block";
 import "./App.css";
 import "animate.css";
 import { computerMove, winCheck, drawCheck } from "./utils/utils";
-import { useEffect } from "react/cjs/react.development";
 
 function App() {
   const [gameArray, setGameArray] = useState(() =>
@@ -18,8 +17,9 @@ function App() {
     const newGameArray = Array.from(gameArray);
     newGameArray[clickedIndex] = "X";
     setGameArray(newGameArray);
-    const winCombinations = winCheck(newGameArray);
     setDraw(drawCheck(newGameArray, winner));
+
+    const winCombinations = winCheck(newGameArray);
 
     if (winCombinations.length) {
       setWinner(true);
