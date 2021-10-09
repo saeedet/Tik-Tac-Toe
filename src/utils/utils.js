@@ -145,3 +145,14 @@ export const drawCheck = (gameArray, winner) => {
     return false;
   }
 };
+
+export const winnerPositionCheck = (arr, index) => {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === index) {
+        return true;
+      }
+    }
+  }
+  return false;
+};

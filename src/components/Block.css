@@ -9,6 +9,7 @@
   font-weight: 900;
   height: 100px;
   width: 100px;
+  color: rgb(27, 31, 36);
 }
 
 .block_hoverEffect {
@@ -20,8 +21,35 @@
 }
 
 .block__shadow {
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 10px rgb(27, 31, 36);
 }
 .block:active {
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px rgb(27, 31, 36);
+}
+
+.userO {
+  text-shadow: 0 0 10px red;
+}
+.userX {
+  text-shadow: 0 0 10px green;
+}
+
+@media (max-width: 500px) {
+  .block {
+    width: 60px;
+    height: 60px;
+    font-size: 50px;
+    font-weight: 900;
+    margin: 15px;
+  }
+}
+@media (max-width: 350px) {
+  .block {
+    padding-bottom: 3px;
+    width: 45px;
+    height: 45px;
+    font-size: 50px;
+    font-weight: 900;
+    margin: 15px;
+  }
 }

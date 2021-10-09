@@ -8,29 +8,6 @@
   height: 100vh;
 }
 
-.App__header {
-  width: 400px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-}
-.App__header__result {
-  font-size: 30px;
-  font-weight: 600;
-  /* padding: 10px; */
-  flex: 1;
-}
-.App__header__title {
-  font-size: 30px;
-  font-weight: 600;
-}
-.App__header__button {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
 .container {
   box-shadow: 0 0 20px rgb(27, 31, 36) inset;
   background-color: white;
@@ -40,33 +17,48 @@
   grid-template-rows: auto auto auto;
 }
 
-.btn {
-  text-align: center;
-  width: 80px;
+.footer {
+  flex: 1;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+}
+
+.footer > div {
+  border: 1px solid whitesmoke;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+  z-index: 100;
   cursor: pointer;
-  border: 1px solid transparent;
-  padding: 2px 5px 5px 5px;
 }
-.btn:hover {
-  border: 1px solid white;
-}
-.btn:active {
+.footer > div:active {
   transform: scale(0.98);
-  border: 1px solid white;
 }
-.eyeBall {
-  background: radial-gradient(closest-side, #034663, #5eb4c4, #407aaa);
-  height: 390px;
-  width: 390px;
-  border-radius: 50%;
-  position: absolute;
-  transition: opacity 1s ease;
+
+.footer__regular:hover {
+  background-color: rgba(0, 128, 0, 0.3);
 }
-.eyeBallBlack {
-  background-color: rgba(0, 0, 0, 0.795);
-  height: 130px;
-  width: 130px;
-  border-radius: 50%;
-  position: absolute;
-  transition: opacity 1s ease;
+.footer__advanced:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.footer__regular__active {
+  background-color: rgba(0, 128, 0, 0.3);
+}
+.footer__advanced__active {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 30px;
+  }
+  .footer {
+    width: 90%;
+  }
 }

@@ -2,16 +2,23 @@ import { useState } from "react";
 import Block from "./components/Block";
 import "./App.css";
 import "animate.css";
-import { computerMove, winCheck, drawCheck } from "./utils/utils";
+import {
+  computerMove,
+  winCheck,
+  drawCheck,
+  winnerPositionCheck,
+} from "./utils/utils";
+import Header from "./components/Header";
 
 function App() {
   const [gameArray, setGameArray] = useState(() =>
     Array.from(Array(9), () => null)
   );
   const [won, setWon] = useState(false);
-  const [winner, setWinner] = useState(false);
+  const [winner, setWinner] = useState("");
   const [draw, setDraw] = useState(false);
-  const [gameLevel, setGameLevel] = useState(true);
+  const [gameLevel, setGameLevel] = useState(false);
+  const [winArray, setWinArray] = useState([]);
 
   const clickHandler = (e) => {
     const clickedIndex = e.target.id;
@@ -23,14 +30,19 @@ function App() {
     const winCombinations = winCheck(newGameArray);
 
     if (winCombinations.length) {
-      setWinner(true);
+      setWinArray(winCombinations);
+      setWinner(newGameArray[winCombinations[0][0]]);
       setWon(true);
     } else {
       setTimeout(() => {
         const computerGameArray = computerMove(newGameArray, gameLevel);
         setGameArray(computerGameArray);
-        if (winCheck(computerGameArray).length) {
-          setWinner(true);
+        const computerWinCheck = winCheck(computerGameArray);
+
+        if (computerWinCheck.length) {
+          console.log(computerWinCheck);
+          setWinArray(computerWinCheck);
+          setWinner(computerGameArray[computerWinCheck[0][0]]);
         }
       }, 350);
     }
@@ -38,45 +50,56 @@ function App() {
 
   const resetHandler = () => {
     setGameArray(Array.from(Array(9), () => null));
-    setWinner(false);
+    setWinner("");
     setWon(false);
     setDraw(false);
+    setWinArray([]);
   };
 
   return (
     <div className="App">
-      <header className="App__header">
-        <div
-          className="App__header__result"
-          style={{ display: winner ? "flex" : draw ? "flex" : "none" }}
-        >
-          {draw ? "Draw!" : `You ${won ? "Won" : "Lost"}!`}
-        </div>
-        <div
-          className="App__header__title"
-          style={{ display: winner ? "none" : draw ? "none" : "flex" }}
-        >
-          Beat me if you can!
-        </div>
-        <div
-          className="App__header__button"
-          style={{ display: winner ? "flex" : draw ? "flex" : "none" }}
-        >
-          <div className="btn" onClick={resetHandler}>
-            play again
-          </div>
-        </div>
-      </header>
+      <Header
+        gameLevel={gameLevel}
+        winner={winner}
+        won={won}
+        draw={draw}
+        resetHandler={resetHandler}
+      />
       <div className="container">
-        {gameArray?.map((block, index) => (
-          <Block
-            winner={winner}
-            block={block}
-            key={index}
-            id={index}
-            clickHandler={clickHandler}
-          />
-        ))}
+        {gameArray?.map((block, index) => {
+          let winPosition = false;
+          if (winner) {
+            winPosition = winnerPositionCheck(winArray, index);
+          }
+          return (
+            <Block
+              winPosition={winPosition}
+              winner={winner}
+              block={block}
+              key={index}
+              id={index}
+              clickHandler={clickHandler}
+            />
+          );
+        })}
+      </div>
+      <div className="footer">
+        <div
+          className={`footer__regular ${
+            !gameLevel && "footer__regular__active"
+          }`}
+          onClick={() => setGameLevel(false)}
+        >
+          Medium
+        </div>
+        <div
+          className={`footer__advanced ${
+            gameLevel && "footer__advanced__active"
+          }`}
+          onClick={() => setGameLevel(true)}
+        >
+          Hard
+        </div>
       </div>
     </div>
   );
