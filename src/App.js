@@ -13,25 +13,13 @@ function App() {
   const [winner, setWinner] = useState(false);
   const [draw, setDraw] = useState(false);
 
-  useEffect(() => {
-    let nullCount = 0;
-    gameArray.forEach((i) => {
-      if (i === null) {
-        nullCount++;
-      }
-    });
-    if (!nullCount && !winner) {
-      setDraw(true);
-    }
-  }, [gameArray, winner]);
-
   const clickHandler = (e) => {
     const clickedIndex = e.target.id;
     const newGameArray = Array.from(gameArray);
     newGameArray[clickedIndex] = "X";
     setGameArray(newGameArray);
     const winCombinations = winCheck(newGameArray);
-    // setDraw(drawCheck(newGameArray, winner));
+    setDraw(drawCheck(newGameArray, winner));
 
     if (winCombinations.length) {
       setWinner(true);
