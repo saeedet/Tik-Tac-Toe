@@ -56,9 +56,11 @@ export const computerMove = (arr) => {
           thisWin.forEach((i) => {
             if (arr[i] === null) {
               index = i;
+              oCount = 0;
             }
           });
         }
+        console.log(index);
       });
       if (oCount === 0) {
         winPotentials[0].forEach((i) => {
