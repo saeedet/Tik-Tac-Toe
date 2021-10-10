@@ -9,6 +9,7 @@ import {
   winnerPositionCheck,
 } from "./utils/utils";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const [gameArray, setGameArray] = useState(() =>
@@ -83,24 +84,12 @@ function App() {
           );
         })}
       </div>
-      <div className="footer">
-        <div
-          className={`footer__regular ${
-            !gameLevel && "footer__regular__active"
-          }`}
-          onClick={() => setGameLevel(false)}
-        >
-          Medium
-        </div>
-        <div
-          className={`footer__advanced ${
-            gameLevel && "footer__advanced__active"
-          }`}
-          onClick={() => setGameLevel(true)}
-        >
-          Hard
-        </div>
-      </div>
+      <Footer
+        gameLevel={gameLevel}
+        setGameLevel={setGameLevel}
+        resetHandler={resetHandler}
+        winner={winner}
+      />
     </div>
   );
 }
