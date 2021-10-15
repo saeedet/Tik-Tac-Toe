@@ -10,6 +10,12 @@ const winCombinations = [
 ];
 const corners = [0, 2, 6, 8];
 const middleConers = [1, 3, 5, 7];
+const twoWayCorners = [
+  [1, 0, 3],
+  [1, 2, 5],
+  [5, 8, 7],
+  [3, 6, 7],
+];
 
 export const winCheck = (arr) => {
   const currentWinCombos = winCombinations.filter(
@@ -106,19 +112,33 @@ export const computerMove = (arr, gameLevel) => {
           }
         }
       } else {
-        const nextMove = winCombinations.filter(
-          (combination) =>
-            arr[combination[0]] === arr[combination[2]] &&
-            arr[combination[2]] === arr[combination[1]] &&
-            arr[combination[0]] === null
-        );
-        if (nextMove.length) {
-          index = nextMove[0][0];
-        } else {
-          for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === null) {
-              index = i;
+        if (gameLevel) {
+          for (let i = 0; i < twoWayCorners.length; i++) {
+            if (
+              arr[twoWayCorners[i][0]] === "X" &&
+              arr[twoWayCorners[i][2]] === "X" &&
+              arr[twoWayCorners[i][1]] === null
+            ) {
+              index = twoWayCorners[i][1];
               break;
+            }
+          }
+        }
+        if (!index) {
+          const nextMove = winCombinations.filter(
+            (combination) =>
+              arr[combination[0]] === arr[combination[2]] &&
+              arr[combination[2]] === arr[combination[1]] &&
+              arr[combination[0]] === null
+          );
+          if (nextMove.length) {
+            index = nextMove[0][0];
+          } else {
+            for (let i = 0; i < arr.length; i++) {
+              if (arr[i] === null) {
+                index = i;
+                break;
+              }
             }
           }
         }
