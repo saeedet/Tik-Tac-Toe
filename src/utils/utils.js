@@ -70,7 +70,7 @@ export const computerMove = (arr, gameLevel) => {
           });
         }
       });
-      if (oCount === 0) {
+      if (!index) {
         winPotentials[0].forEach((i) => {
           if (arr[i] === null) {
             index = i;
