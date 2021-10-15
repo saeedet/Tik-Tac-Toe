@@ -26,7 +26,6 @@ function App() {
     const newGameArray = Array.from(gameArray);
     newGameArray[clickedIndex] = "X";
     setGameArray(newGameArray);
-    setDraw(drawCheck(newGameArray, winner));
 
     const winCombinations = winCheck(newGameArray);
 
@@ -35,17 +34,21 @@ function App() {
       setWinner(newGameArray[winCombinations[0][0]]);
       setWon(true);
     } else {
-      setTimeout(() => {
-        const computerGameArray = computerMove(newGameArray, gameLevel);
-        setGameArray(computerGameArray);
-        const computerWinCheck = winCheck(computerGameArray);
+      if (drawCheck(newGameArray, winner)) {
+        setDraw(true);
+      } else {
+        setTimeout(() => {
+          const computerGameArray = computerMove(newGameArray, gameLevel);
+          setGameArray(computerGameArray);
+          const computerWinCheck = winCheck(computerGameArray);
 
-        if (computerWinCheck.length) {
-          console.log(computerWinCheck);
-          setWinArray(computerWinCheck);
-          setWinner(computerGameArray[computerWinCheck[0][0]]);
-        }
-      }, 350);
+          if (computerWinCheck.length) {
+            console.log(computerWinCheck);
+            setWinArray(computerWinCheck);
+            setWinner(computerGameArray[computerWinCheck[0][0]]);
+          }
+        }, 350);
+      }
     }
   };
 
