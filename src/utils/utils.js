@@ -16,6 +16,10 @@ const twoWayCorners = [
   [5, 8, 7],
   [3, 6, 7],
 ];
+const middleWinCombos = [
+  [3, 4, 5],
+  [1, 4, 7],
+];
 
 export const winCheck = (arr) => {
   const currentWinCombos = winCombinations.filter(
@@ -123,11 +127,21 @@ export const computerMove = (arr, gameLevel) => {
           }
         }
         if (!index) {
-          for (let i = 0; i < middleConers.length; i++) {
-            if (arr[middleConers[i]] === null) {
-              index = middleConers[i];
-              xCorners = 0;
-              break;
+          for (let i = 0; i < middleWinCombos.length; i++) {
+            let xApp = 0;
+            for (let j = 0; j < middleWinCombos[i].length; j++) {
+              if (arr[middleWinCombos[i][j]] === "X") {
+                xApp++;
+              }
+            }
+            if (xApp === 0) {
+              if (middleWinCombos[i][0] === null) {
+                index = middleWinCombos[i][0];
+                break;
+              } else {
+                index = middleWinCombos[i][2];
+                break;
+              }
             }
           }
         }
