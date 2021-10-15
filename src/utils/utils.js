@@ -95,10 +95,7 @@ export const computerMove = (arr, gameLevel) => {
         }
       }
 
-      if (
-        (xCorners > 1 && gameLevel) ||
-        (xCorners === 1 && arr[4] === "O" && gameLevel)
-      ) {
+      if (xCorners > 1 && gameLevel) {
         //take the middle which is empty yet
         for (let i = 0; i < middleConers.length; i++) {
           if (arr[middleConers[i]] === null) {
@@ -112,6 +109,26 @@ export const computerMove = (arr, gameLevel) => {
           if (arr[corners[i]] === null) {
             index = corners[i];
             break;
+          }
+        }
+      } else if (xCorners === 1 && arr[4] === "O" && gameLevel) {
+        for (let i = 0; i < twoWayCorners.length; i++) {
+          if (
+            arr[twoWayCorners[i][0]] === "X" &&
+            arr[twoWayCorners[i][2]] === "X" &&
+            arr[twoWayCorners[i][1]] === null
+          ) {
+            index = twoWayCorners[i][1];
+            break;
+          }
+        }
+        if (!index) {
+          for (let i = 0; i < middleConers.length; i++) {
+            if (arr[middleConers[i]] === null) {
+              index = middleConers[i];
+              xCorners = 0;
+              break;
+            }
           }
         }
       } else {
