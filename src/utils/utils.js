@@ -9,7 +9,6 @@ const winCombinations = [
   [2, 4, 6],
 ];
 const corners = [0, 2, 6, 8];
-const middleConers = [1, 3, 5, 7];
 const twoWayCorners = [
   [1, 0, 3],
   [1, 2, 5],
@@ -35,6 +34,7 @@ export const winCheck = (arr) => {
 export const computerMove = (arr, gameLevel) => {
   let index;
 
+  // Check for Immediate win or lose
   const winPotentials = winCombinations.filter((combination) => {
     if (
       arr[combination[0]] === arr[combination[2]] ||
@@ -57,65 +57,43 @@ export const computerMove = (arr, gameLevel) => {
   });
 
   if (winPotentials.length) {
-    if (winPotentials.length > 1) {
-      let oCount = 0;
-      winPotentials.forEach((thisWin) => {
-        for (let i = 0; i < thisWin.length; i++) {
-          if (arr[thisWin[i]] === "O") {
-            oCount++;
-          }
-        }
-        if (oCount === 2) {
-          thisWin.forEach((i) => {
-            if (arr[i] === null) {
-              index = i;
-              oCount = 0;
+    // logic for computer win check
+    for (let i = 0; i < winPotentials.length; i++) {
+      for (let j = 0; j < winPotentials[i].length; j++) {
+        if (arr[winPotentials[i][j]] === "O") {
+          for (let k = 0; k < winPotentials[i].length; k++) {
+            if (arr[winPotentials[i][k]] === null) {
+              index = winPotentials[i][k];
+              console.log(index);
+              const newArray = Array.from(arr);
+              newArray[index] = "O";
+              return newArray;
             }
-          });
-        }
-      });
-      if (!index) {
-        winPotentials[0].forEach((i) => {
-          if (arr[i] === null) {
-            index = i;
           }
-        });
-      }
-    } else {
-      winPotentials[0].forEach((i) => {
-        if (arr[i] === null) {
-          index = i;
         }
-      });
+      }
+    }
+    // if it's not returned yet, it is a 2way lose anyway
+    for (let i = 0; i < winPotentials[0].length; i++) {
+      if (arr[winPotentials[0][i]] === null) {
+        index = winPotentials[0][i];
+        const newArray = Array.from(arr);
+        newArray[index] = "O";
+        return newArray;
+      }
     }
   } else {
+    //take the middle
     if (arr[4] === null) {
-      index = 4;
-    } else {
-      let xCorners = 0;
-      for (let i = 0; i < corners.length; i++) {
-        if (arr[corners[i]] === "X") {
-          xCorners++;
-        }
-      }
-
-      if (xCorners > 1 && gameLevel) {
-        //take the middle which is empty yet
-        for (let i = 0; i < middleConers.length; i++) {
-          if (arr[middleConers[i]] === null) {
-            index = middleConers[i];
-            xCorners = 0;
-            break;
-          }
-        }
-      } else if (xCorners === 1 && arr[4] === "X" && gameLevel) {
-        for (let i = 0; i < corners.length; i++) {
-          if (arr[corners[i]] === null) {
-            index = corners[i];
-            break;
-          }
-        }
-      } else if (xCorners === 1 && arr[4] === "O" && gameLevel) {
+      const newArray = Array.from(arr);
+      newArray[4] = "O";
+      return newArray;
+    }
+    // Hard mode move
+    if (gameLevel) {
+      // check the middle
+      if (arr[4] === "O") {
+        // check 2way corners
         for (let i = 0; i < twoWayCorners.length; i++) {
           if (
             arr[twoWayCorners[i][0]] === "X" &&
@@ -123,66 +101,46 @@ export const computerMove = (arr, gameLevel) => {
             arr[twoWayCorners[i][1]] === null
           ) {
             index = twoWayCorners[i][1];
-            break;
+            const newArray = Array.from(arr);
+            newArray[index] = "O";
+            return newArray;
           }
         }
-        if (!index) {
-          for (let i = 0; i < middleWinCombos.length; i++) {
-            let xApp = 0;
-            for (let j = 0; j < middleWinCombos[i].length; j++) {
-              if (arr[middleWinCombos[i][j]] === "X") {
-                xApp++;
-              }
-            }
-            if (xApp === 0) {
-              if (middleWinCombos[i][0] === null) {
-                index = middleWinCombos[i][0];
-                break;
-              } else {
-                index = middleWinCombos[i][2];
-                break;
-              }
-            }
+        // if it is not returned yet then go for middle wins
+        for (let i = 0; i < middleWinCombos.length; i++) {
+          if (
+            arr[middleWinCombos[i][0]] === null &&
+            arr[middleWinCombos[i][2]] === null
+          ) {
+            index = middleWinCombos[i][0];
+            const newArray = Array.from(arr);
+            newArray[index] = "O";
+            return newArray;
           }
         }
-      } else {
-        if (gameLevel) {
-          for (let i = 0; i < twoWayCorners.length; i++) {
-            if (
-              arr[twoWayCorners[i][0]] === "X" &&
-              arr[twoWayCorners[i][2]] === "X" &&
-              arr[twoWayCorners[i][1]] === null
-            ) {
-              index = twoWayCorners[i][1];
-              break;
-            }
-          }
-        }
-        if (!index) {
-          const nextMove = winCombinations.filter(
-            (combination) =>
-              arr[combination[0]] === arr[combination[2]] &&
-              arr[combination[2]] === arr[combination[1]] &&
-              arr[combination[0]] === null
-          );
-          if (nextMove.length) {
-            index = nextMove[0][0];
-          } else {
-            for (let i = 0; i < arr.length; i++) {
-              if (arr[i] === null) {
-                index = i;
-                break;
-              }
-            }
+      }
+      if (arr[4] === "X") {
+        // go for corners
+        for (let i = 0; i < corners.length; i++) {
+          if (arr[corners[i]] === null) {
+            index = corners[i];
+            const newArray = Array.from(arr);
+            newArray[index] = "O";
+            return newArray;
           }
         }
       }
     }
-  }
 
-  const newArray = Array.from(arr);
-  newArray[index] = "O";
-  return newArray;
+    // General move
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === null) {
+        const newArray = Array.from(arr);
+        newArray[i] = "O";
+        return newArray;
+      }
+    }
+  }
 };
 
 export const drawCheck = (gameArray, winner) => {
