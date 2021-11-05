@@ -61,7 +61,11 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div
+      className={`App ${
+        winner ? (won ? "App_bg_Winner" : "App_bg_Loser") : ""
+      }`}
+    >
       <Header
         gameLevel={gameLevel}
         winner={winner}
